@@ -31,7 +31,12 @@ class ContactData extends Component {
                     type: 'text',
                     placeholder: 'ZIP Code'
                 },
-                value: ''
+                value: '',
+                validation:{
+                    required: true,
+                    minLength: 5,
+                    maxLength: 5,
+                }
             },
             country: {
                 elementType: 'input',
@@ -64,6 +69,21 @@ class ContactData extends Component {
         loading: false
     }
 
+    checkValidity(value, rules) {
+        let isValid = false;
+
+        if(rules.required) {
+            isValid = value.trim() !== '';
+        }
+
+        if(rules.minLength) {
+            isValid = value.length >= rules.minLength;
+        }
+        if(rules.maxLength) {
+            isValid = value.length <= rules.minLength;
+        }
+        return isValid;
+    }
     orderHandler = (event) => {
         event.preventDefault();
         this.setState({loading:true});
@@ -95,6 +115,7 @@ class ContactData extends Component {
             ...updatedOrderForm[inputIdentifier]
         };
         updatedFormElement.value = event.target.value;
+        updatedFormElement.valid = this.checkValidity(updatedFormElement.value, updatedFormElement.validation);
         updatedOrderForm[inputIdentifier] = updatedFormElement;
         this.setState({orderForm: updatedOrderForm});
     }

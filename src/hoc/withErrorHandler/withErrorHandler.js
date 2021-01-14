@@ -1,6 +1,4 @@
-import axios from 'axios';
 import React, { Component } from 'react';
-import { render } from 'react-dom';
 
 import Modal from '../../components/UI/Modal/Modal';
 import Aux from '../Aux/Aux';
