@@ -40,7 +40,7 @@ class Auth extends Component {
         }
     }
 
-    inputChangedHandler = (event, controlName) {
+    inputChangedHandler = (event, controlName) => {
         const updatedControls = {
             ...this.state.controls,
             [controlName]: {
