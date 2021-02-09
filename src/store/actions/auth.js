@@ -22,7 +22,7 @@ export const authFail = (error) => {
     }
 }
 
-export const auth = (email, password) => {
+export const auth = (email, password, isSignup) => {
     return dispatch => {
         dispatch(authStart());
         const authData = {
@@ -30,7 +30,11 @@ export const auth = (email, password) => {
             password: password,
             returnSecureData: true
         }
-        const authURL = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=' + process.env.REACT_APP_FIREBASE_KEY
+        let authURL = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=' + process.env.REACT_APP_FIREBASE_KEY;
+        if (!isSignup) {
+            authURL = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=' + process.env.REACT_APP_FIREBASE_KEY;
+        }
+        console.log(authURL);
         axios.post(authURL, authData)
             .then(res => {
                 console.log(res);
@@ -38,7 +42,7 @@ export const auth = (email, password) => {
             })
             .catch(err => {
                 console.log(err);
-                dispatch(authFail());
+                dispatch(authFail(err));
             })
     }
 }
