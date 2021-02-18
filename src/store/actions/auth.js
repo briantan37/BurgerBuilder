@@ -41,20 +41,19 @@ export const auth = (email, password, isSignup) => {
     return dispatch => {
         dispatch(authStart());
         const authData = {
-            email: email,
-            password: password,
-            returnSecureData: true
+            "email": email,
+            "password": password,
+            "returnSecureToken": true
         }
         let authURL = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=' + process.env.REACT_APP_FIREBASE_KEY;
         if (!isSignup) {
             authURL = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=' + process.env.REACT_APP_FIREBASE_KEY;
         }
-        console.log(authURL);
         axios.post(authURL, authData)
-            .then(res => {
-                console.log(res);
-                dispatch(authSuccess(res.data.idToken, res.data.localId));
-                dispatch(checkAuthTimeout(res.data.expiresIn));
+            .then(response => {
+                console.log(response);
+                dispatch(authSuccess(response.data.idToken, response.data.localId));
+                dispatch(checkAuthTimeout(response.data.expiresIn));
             })
             .catch(err => {
                 dispatch(authFail(err.response.data.error));
