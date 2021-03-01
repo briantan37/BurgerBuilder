@@ -11,14 +11,14 @@ class Modal extends Component {
     }
 
     componentWillUpdate() {
-        console.log('[Modal] WillUpdate');
+
     }
 
     render() {
         return (
             <Aux>
-                <Backdrop show={this.props.show} clicked={this.props.modalClosed}/>
-                <div 
+                <Backdrop show={this.props.show} clicked={this.props.modalClosed} />
+                <div
                     className={classes.Modal}
                     style={{
                         transform: this.props.show ? 'translateY(0)' : 'translateY(-100vh)',
